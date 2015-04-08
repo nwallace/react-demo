@@ -33,11 +33,21 @@
         _.each(todoListeners, function(callback) { callback(); });
       };
 
+      var deleteTodo = function(id) {
+        delete todos[id];
+        _.each(todoListeners, function(callback) { callback(); });
+      };
+
       var TodoItem = React.createClass({
+        deleteTodo: function(event) {
+          deleteTodo(this.props.id);
+        },
+
         render: function() {
           return (
             <li>
               {this.props.text}
+              <a href="#" className="delete" onClick={this.deleteTodo}>&times;</a>
             </li>
           );
         }

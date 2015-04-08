@@ -17,13 +17,31 @@
   <body>
     <div id="app"></div>
     <script type="text/jsx">
-      var TodoList = React.createClass({
+      var todos = {
+        0: "Code",
+        1: "Eat",
+        2: "Sleep"
+      }
+
+      var TodoItem = React.createClass({
         render: function() {
           return (
+            <li>
+              {this.props.text}
+            </li>
+          );
+        }
+      });
+
+      var TodoList = React.createClass({
+        render: function() {
+          var todoItems = _.map(todos, function(text, id) {
+            return <TodoItem text={text} id={id} key={id} />
+          });
+
+          return (
             <ul>
-              <li>Code</li>
-              <li>Eat</li>
-              <li>Sleep</li>
+              {todoItems}
             </ul>
           );
         }

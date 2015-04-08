@@ -24,7 +24,14 @@
         1: "Eat",
         2: "Sleep",
         3: "More code"
-      }
+      };
+
+      var todoListeners = [];
+
+      var createTodo = function(text) {
+        todos[new Date().getTime()] = text;
+        _.each(todoListeners, function(callback) { callback(); });
+      };
 
       var TodoItem = React.createClass({
         render: function() {
@@ -37,8 +44,24 @@
       });
 
       var TodoList = React.createClass({
+        getInitialState: function() {
+          return {todos: todos};
+        },
+
+        updateTodos: function() {
+          this.setState({todos: todos});
+        },
+
+        componentDidMount: function() {
+          todoListeners.push(this.updateTodos);
+        },
+
+        componentWillUnmount: function() {
+          todoListeners = _.without(todoListeners, this.updateTodos);
+        },
+
         render: function() {
-          var todoItems = _.map(todos, function(text, id) {
+          var todoItems = _.map(this.state.todos, function(text, id) {
             return <TodoItem text={text} id={id} key={id} />
           });
 
@@ -54,7 +77,7 @@
         handleKeyDown: function(event) {
           if (event.which == ENTER_KEY_CODE) {
             var node = this.refs.newTodo.getDOMNode();
-            alert(node.value);
+            createTodo(node.value);
             node.value = "";
           }
         },

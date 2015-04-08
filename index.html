@@ -17,10 +17,13 @@
   <body>
     <div id="app"></div>
     <script type="text/jsx">
+      var ENTER_KEY_CODE = 13;
+
       var todos = {
         0: "Code",
         1: "Eat",
-        2: "Sleep"
+        2: "Sleep",
+        3: "More code"
       }
 
       var TodoItem = React.createClass({
@@ -47,11 +50,26 @@
         }
       });
 
+      var NewTodoItem = React.createClass({
+        handleKeyDown: function(event) {
+          if (event.which == ENTER_KEY_CODE) {
+            var node = this.refs.newTodo.getDOMNode();
+            alert(node.value);
+            node.value = "";
+          }
+        },
+
+        render: function() {
+          return <input type="text" ref="newTodo" placeholder="What needs doing?" onKeyDown={this.handleKeyDown} />
+        }
+      });
+
       var Demo = React.createClass({
         render: function() {
           return (
             <div>
               <h1>Todos</h1>
+              <NewTodoItem />
               <TodoList />
             </div>
           );

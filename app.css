@@ -1,0 +1,16 @@
+#app {
+  width: 920px;
+  margin: 0 auto;
+}
+
+ul {
+  max-width: 200px;
+}
+
+li {
+  position: relative;
+}
+
+.delete {
+  float: right;
+}

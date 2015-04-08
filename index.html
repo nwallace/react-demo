@@ -17,11 +17,24 @@
   <body>
     <div id="app"></div>
     <script type="text/jsx">
+      var TodoList = React.createClass({
+        render: function() {
+          return (
+            <ul>
+              <li>Code</li>
+              <li>Eat</li>
+              <li>Sleep</li>
+            </ul>
+          );
+        }
+      });
+
       var Demo = React.createClass({
         render: function() {
           return (
             <div>
-              <h1>Hello from React!</h1>
+              <h1>Todos</h1>
+              <TodoList />
             </div>
           );
         }
